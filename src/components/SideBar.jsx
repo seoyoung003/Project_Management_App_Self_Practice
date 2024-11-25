@@ -22,20 +22,19 @@ const Button = styled.button`
   border-radius: 10px;
   width: 150px;
   height: 50px;
-  background-color: gray;
-  color:white;
-  margin-top: 30px;
+  background-color: #5c4033;
+  color: white;
+  margin-top: 20px;
   &:hover {
-    background-color: #D3D3D3 ;
+    background-color: green;
   }
 `;
-
-export default function SideBar() {
+export default function SideBar({goToProjectInputForm}) {
   return (
     <Div>
       <H2>YOUR PROJECTS</H2>
 
-      <Button onClick={goToProjectScreen}>+ Add Project</Button>
+      <Button onClick={goToProjectInputForm}>+ Add Project</Button>
     </Div>
   );
 }

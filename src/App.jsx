@@ -3,8 +3,10 @@ import React, { useState } from "react";
 
 import noProject from "./assets/no-projects.png";
 import SideBar from "./components/SideBar";
+import InputProject from "./components/InputProject";
+import NewProject from "./components/NewProject";
 
-const Div = styled.div`
+const Wrapper = styled.div`
   display: flex;
   height: 100vh;
 `;
@@ -14,7 +16,8 @@ const MainContent = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  flex: 1; /* 남은 공간을 차지 */
+ 
+  flex-grow: 1; /* 남은 공간을 차지 */
 `;
 
 const Img = styled.img`
@@ -26,7 +29,7 @@ const Img = styled.img`
 const H1 = styled.h1`
   font-size: 32px;
   font-weight: bold;
-  color: #666A73;
+  color: #666a73;
   margin-top: 20px;
 `;
 
@@ -37,57 +40,82 @@ const H2 = styled.h2`
   margin-top: 20px;
 `;
 
-const Button = styled.button`
-  border-radius: 10px;
-  width: 150px;
-  height: 50px;
-  background-color: #5C4033;
-  color:white;
-  margin-top: 20px;
-  &:hover {
-    background-color: green;
-  }
+const SideBarContainer = styled.div`
+ 
+  background-color: #2c2f33;
 `;
 
-function App() {
 
+
+function App() {
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "", 
+    dueDate: "",
+  });
+
+  const handleInputChange = (e) => {
+    const {name, value} = e.target;
+    
+    setFormData((prevData) => {
+      return{
+        ...prevData,
+        [name]: value,
+      }
+    });
+  };
   const [currentScreen, setCurrentScreen] = useState("home"); // 현재 화면 상태
 
-  const goToProjectScreen = () => {
-    setCurrentScreen("project");
+  const goToProjectInputForm = () => {
+    setCurrentScreen("projectInputForm");
   };
 
   const goToHomeScreen = () => {
     setCurrentScreen("home");
   };
+
+  const goToNewProject = () => {
+    setCurrentScreen("newProject");
+  };
   return (
-    <Div>
-      <SideBar/>
+    <div>
+      <Wrapper>
+        <SideBarContainer>
+          <SideBar goToProjectInputForm={goToProjectInputForm} />
+        </SideBarContainer>
 
-      <MainContent>
-        <Img src={noProject} />
+        <MainContent>
+        {currentScreen === "home" && (
 
-        <H1>No Project Selected</H1>
-        <H2>Select a project or get started with a new one</H2>
-
-      </MainContent>
-
-      {currentScreen === "home" && (
-        <div>
+          <div>
           
-          <button onClick={goToProjectScreen}>Go to Project</button>
-        </div>
-      )}
+            <Img src={noProject} />
 
-      {currentScreen === "project" && (
-        <InputProject/>
-      )}
-    </Div>
+            <H1>No Project Selected</H1>
+            <H2>Select a project or get started with a new one</H2>
 
+          </div>
+         
+        )}
 
-      
+        {currentScreen === "projectInputForm" && 
+        <InputProject 
+          goToHomeScreen={goToHomeScreen} 
+          formData={formData}
+          handleInputChange={handleInputChange}
+          goToNewProject={goToNewProject}
+        />}
 
-    
+        
+        {currentScreen === "newProject" && 
+          <NewProject formData={formData}/>
+        } 
+
+        
+
+        </MainContent>
+      </Wrapper>
+    </div>
   );
 }
 
