@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
 const Input = styled.input`
-    border-radius: 3px;
-    background-color: #d2d2d2;
-    margin-right: 15px;
+  border-radius: 3px;
+  background-color: #d2d2d2;
+  margin-right: 15px;
 `;
 
 const H1 = styled.h1`
@@ -12,35 +12,31 @@ const H1 = styled.h1`
   margin-top: 20px;
 `;
 
-const InlineWrapper = styled.div`
+const InlineButton = styled.button`
   display: inline;
-  
 `;
 
+export default function NewProject({ formData }) {
+  return (
+    <div>
+      <ul>
+        {formData.length > 0 && (
+          <li key={formData.length - 1}>
+            <H1>{formData[formData.length - 1].title}</H1>
+            <InlineButton>Delete</InlineButton>
 
-
-export default function NewProject({formData}) {
-    return(
-        <div>
-            <InlineWrapper>
-            <H1>{formData.title}</H1>
-            <button>Delete</button>
-            </InlineWrapper>
-
-            <p>{formData.dueDate}</p>
-            <br />
-            <p>{formData.description}</p>
-
+            <p>{formData[formData.length - 1].dueDate}</p>
+            <p>{formData[formData.length - 1].description}</p>
             <hr />
+          </li>
+        )}
+      </ul>
+      <hr />
 
-            <H1>Tasks</H1>
-            <Input type="text" />
-            <button>Add Task</button>
-            <p>This project does not have any tasks yet.</p>
-
-            
-
-
-        </div>
-    );
+      <H1>Tasks</H1>
+      <Input type="text" value={newTask} onChange={(e) => setNewTask(e.target.value)}/>
+      <button onClick={() => addTask(project.id)}>Add Task</button>
+      <p>This project does not have any tasks yet.</p>
+    </div>
+  );
 }

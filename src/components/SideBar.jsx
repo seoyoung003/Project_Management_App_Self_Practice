@@ -29,12 +29,18 @@ const Button = styled.button`
     background-color: green;
   }
 `;
-export default function SideBar({goToProjectInputForm}) {
+export default function SideBar({goToProjectInputForm, formData}) {
   return (
     <Div>
       <H2>YOUR PROJECTS</H2>
 
       <Button onClick={goToProjectInputForm}>+ Add Project</Button>
+
+      {formData?.length > 0 && <ul>
+          {formData.map((data, index) => (
+            <li key={index}>{data.title}</li>
+          ))}
+        </ul>}
     </Div>
   );
 }
